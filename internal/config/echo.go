@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 func NewEcho() *echo.Echo {
@@ -16,7 +15,7 @@ func NewEcho() *echo.Echo {
 	// e.HTTPErrorHandler = NewHttpErrorHandler(NewErrorStatusCodeMaps()).Handler
 
 	// Middleware
-	e.Use(middleware.Logger())
+	// e.Use(middleware.Logger())
 
 	return e
 }

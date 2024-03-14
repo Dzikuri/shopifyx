@@ -35,7 +35,7 @@ func (c *RoutesConfig) Setup() {
 }
 
 func (c *RoutesConfig) SetupRouteAuth() {
-
+	c.Echo.POST("/v1/user/register", c.UserHandler.UserRegister)
 }
 
 func (c *RoutesConfig) SetupRouteUser() {
