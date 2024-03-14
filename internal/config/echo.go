@@ -16,7 +16,8 @@ func NewEcho() *echo.Echo {
 	// e.HTTPErrorHandler = NewHttpErrorHandler(NewErrorStatusCodeMaps()).Handler
 
 	// Middleware
-	e.Use(middleware.Logger())
+	// e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
 	return e
 }
