@@ -4,12 +4,14 @@ import (
 	"net/http"
 
 	"github.com/Dzikuri/shopifyx/internal/delivery/handler"
+	"github.com/Dzikuri/shopifyx/internal/delivery/middleware"
 	"github.com/labstack/echo/v4"
 )
 
 type RoutesConfig struct {
 	Echo        *echo.Echo
 	UserHandler *handler.UserHandler
+    ProductHandler *handler.ProductHandler
 }
 
 func (c *RoutesConfig) Setup() {
@@ -44,7 +46,12 @@ func (c *RoutesConfig) SetupRouteUser() {
 }
 
 func (c *RoutesConfig) SetupRouteProduct() {
+    
+	product := c.Echo.Group("/v1/product", func(next echo.HandlerFunc) echo.HandlerFunc {
+        return middleware.JwtCheckTokenUser(next)
+    })
 
+	product.POST("", c.ProductHandler.ProductCreate)
 }
 
 func (c *RoutesConfig) SetupRouteBankAccount() {

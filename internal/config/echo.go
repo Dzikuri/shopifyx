@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 func NewEcho() *echo.Echo {
@@ -17,7 +16,7 @@ func NewEcho() *echo.Echo {
 
 	// Middleware
 	// e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
+	// e.Use(middleware.Recover())
 
 	return e
 }

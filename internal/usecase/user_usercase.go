@@ -48,28 +48,18 @@ func (u *UserUseCase) UserLogin(ctx context.Context, request *model.UserLoginReq
 		return nil, errors.New("Password mismatch")
 	}
 
-	jwtClaims := helper.JwtCustomClaims{
-		Name: result.Name,
-		Username: result.Username,
-		UserId: result.Id.String(),
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute * 2)),
-		},
-	}
+	// NOTE Generate Token
 
-	// Create token with claims
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwtClaims)
+	token, err := helper.JwtGenerateToken(&result)
 
-	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
-		return nil, err
+		return nil, echo.ErrBadRequest
 	}
 
 	return &model.UserAuthResponse{
 		Username: result.Username,
 		Name: result.Name,
-		AccessToken: t,
+		AccessToken: token,
 	}, nil
 
 }

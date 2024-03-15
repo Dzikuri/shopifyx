@@ -21,12 +21,18 @@ func Bootstrap(config *BootstrapConfig) {
 
 	// Setup User
 	userRepository := repository.NewUserRepository(config.DB)
-	userUsecase := usecase.NewUserUseCase(DB, config.Validate, userRepository)
+	userUsecase := usecase.NewUserUseCase(config.DB, config.Validate, userRepository)
 	userHandler := handler.NewUserHandler(userUsecase)
+
+    // Setup Product
+    productRepository := repository.NewProductRepository(config.DB)
+    productUseCase := usecase.NewProductUseCase(config.DB, config.Validate, productRepository)
+    productHandler := handler.NewProductHandler(productUseCase)
 
 	routeConfig := routes.RoutesConfig{
 		Echo:        config.App,
 		UserHandler: userHandler,
+        ProductHandler: productHandler,
 	}
 
 	routeConfig.Setup()

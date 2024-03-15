@@ -118,7 +118,6 @@ func (r *UserRepository) Create(ctx context.Context, request model.UserRegisterR
 
 	err = r.DB.QueryRow(queryInsert, request.Username, request.Name, request.Password, createdAt, updatedAt).Scan(&userId)
 
-	fmt.Println(string(userId))
 	if err != nil {
 		fmt.Println(err)
 		return model.UserResponse{}, err
